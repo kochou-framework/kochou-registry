@@ -1,0 +1,6 @@
+[submodule "third_party/ktl"]
+	path = third_party/ktl
+	url = https://gitverse.ru/kochou-framework/ktl.git
+[submodule "third_party/kochou"]
+	path = third_party/kochou
+	url = https://gitverse.ru/kochou-framework/kochou.git
