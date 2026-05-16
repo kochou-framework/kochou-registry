@@ -1,0 +1,12 @@
+[submodule "template/third_party/ktl"]
+	path = template/third_party/ktl
+	url = https://gitverse.ru/kochou-framework/ktl.git
+[submodule "template/third_party/kochou"]
+	path = template/third_party/kochou
+	url = https://gitverse.ru/kochou-framework/kochou.git
+[submodule "metal_window/third_party/kochou"]
+	path = metal_window/third_party/kochou
+	url = https://gitverse.ru/kochou-framework/kochou.git
+[submodule "metal_window/third_party/ktl"]
+	path = metal_window/third_party/ktl
+	url = https://gitverse.ru/kochou-framework/ktl.git
