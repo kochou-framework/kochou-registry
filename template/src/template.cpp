@@ -1,1 +1,1 @@
-#include <kochou-registry/template/include/template.hpp>
+#include <template/template.hpp>
