@@ -44,3 +44,8 @@ layout.json
     ???
 }
 ```
+
+```
+git submodule add https://gitverse.ru/kochou-framework/kochou.git third_party/kochou
+git submodule add https://gitverse.ru/kochou-framework/ktl.git third_party/ktl
+```
