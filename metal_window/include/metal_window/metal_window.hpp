@@ -12,6 +12,15 @@ namespace kochou::registry
 {
 class metal_window
 {
+// component requirements
+public:
+    static ktl::errc
+    ensure(kochou::shared_context _sctx) noexcept;
+    static ktl::errc
+    should(kochou::shared_context _sctx) noexcept;
+    static bool
+    allowed(kochou::shared_context _sctx) noexcept;
+
 public:
     ~metal_window() noexcept;
     metal_window(const metal_window &)     = delete;
