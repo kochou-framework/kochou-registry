@@ -1,7 +1,0 @@
-#ifndef KOCHOU_API_WINDOW_XCB_HPP
-#define KOCHOU_API_WINDOW_XCB_HPP
-
-#ifdef KOCHOU_WINDOW_BACKEND_XCB
-
-#endif
-#endif

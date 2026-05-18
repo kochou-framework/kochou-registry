@@ -8,11 +8,13 @@
 
 #include <kochou/context/context.hpp>
 
+#include <common/window_interface.hpp>
+
 namespace kochou::registry
 {
 class metal_window
 {
-// component requirements
+    // component requirements
 public:
     static ktl::errc
     ensure(kochou::shared_context _sctx) noexcept;
@@ -33,16 +35,29 @@ public:
 private:
     metal_window() noexcept;
 
+    // interface
 public:
     static ktl::result< std::tuple< metal_window, ktl::api::surface_khr >, ktl::errc >
     make(kochou::shared_context _sctx, ktl::u32 _width, ktl::u32 _height, std::string_view _title) noexcept;
 
     ktl::u32
+    offset_x() const noexcept;
+    ktl::u32
+    offset_y() const noexcept;
+    ktl::u32
     width() const noexcept;
     ktl::u32
     height() const noexcept;
+
     bool
     should_close() const noexcept;
+
+    ktl::errc
+    hide() noexcept;
+    ktl::errc
+    show() noexcept;
+    ktl::u32
+    state() noexcept;
 
 private:
     kochou::shared_context sctx_;
