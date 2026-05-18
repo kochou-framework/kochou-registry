@@ -9,7 +9,8 @@
             "defines": [
                 "KOCHOU_LOADER_VULKAN_DYNAMIC_LIB_NAME=\"\"",
                 "KOCHOU_FRAMEWORK_VERSION=1",
-                "KOCHOU_PLATFORM_MACOS"
+                "KOCHOU_PLATFORM_MACOS",
+                "KOCHOU_LOG_LEVEL=5"
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c23",
@@ -25,7 +26,8 @@
             "defines": [
                 "KOCHOU_LOADER_VULKAN_DYNAMIC_LIB_NAME=\"\"",
                 "KOCHOU_FRAMEWORK_VERSION=1",
-                "KOCHOU_PLATFORM_LINUX"
+                "KOCHOU_PLATFORM_LINUX",
+                "KOCHOU_LOG_LEVEL=5"
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c23",
