@@ -25,12 +25,12 @@ public:
 
 public:
     ~metal_window() noexcept;
-    metal_window(const metal_window &)     = delete;
-    metal_window(metal_window &&) noexcept = default;
+    metal_window(const metal_window &) = delete;
+    metal_window(metal_window &&) noexcept;
     metal_window &
     operator=(const metal_window &) = delete;
     metal_window &
-    operator=(metal_window &&) noexcept = default;
+    operator=(metal_window &&) noexcept;
 
 private:
     metal_window() noexcept;
