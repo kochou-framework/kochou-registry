@@ -49,7 +49,10 @@ concept is_valid_window_interface = requires(WINDOW _window, const WINDOW & _con
     { _const_window.is_fullscreen() } noexcept -> std::same_as< bool >;
     { _const_window.should_close() } noexcept -> std::same_as< bool >;
 
-    // events
+    { _window.poll_events() } noexcept -> std::same_as< void >;
+
+    // TODO events
+    /*
     {
         _window.on_close_request(
             []() -> bool
@@ -105,6 +108,7 @@ concept is_valid_window_interface = requires(WINDOW _window, const WINDOW & _con
             {
             })
     } noexcept -> std::same_as< bool >;
+    */
 };
 } // namespace kochou::registry
 

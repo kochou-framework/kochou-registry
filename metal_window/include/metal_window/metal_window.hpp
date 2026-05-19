@@ -38,26 +38,35 @@ private:
     // interface
 public:
     static ktl::result< std::tuple< metal_window, ktl::api::surface_khr >, ktl::errc >
-    make(kochou::shared_context _sctx, ktl::u32 _width, ktl::u32 _height, std::string_view _title) noexcept;
+    make(kochou::shared_context _sctx, const kochou::registry::window_input_params & _params) noexcept;
 
-    ktl::u32
+    ktl::i32
     offset_x() const noexcept;
-    ktl::u32
+    ktl::i32
     offset_y() const noexcept;
     ktl::u32
     width() const noexcept;
     ktl::u32
     height() const noexcept;
 
-    bool
-    should_close() const noexcept;
-
     ktl::errc
     hide() noexcept;
     ktl::errc
     show() noexcept;
-    ktl::u32
-    state() noexcept;
+    ktl::errc
+    close() noexcept;
+
+    bool
+    is_visible() const noexcept;
+    bool
+    is_focused() const noexcept;
+    bool
+    is_fullscreen() const noexcept;
+    bool
+    should_close() const noexcept;
+
+    void
+    poll_events() noexcept;
 
 private:
     kochou::shared_context sctx_;
@@ -66,5 +75,7 @@ private:
     void *                 layer_;
 };
 } // namespace kochou::registry
+
+static_assert(kochou::registry::is_valid_window_interface< kochou::registry::metal_window >);
 
 #endif
