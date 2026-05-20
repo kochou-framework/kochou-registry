@@ -371,7 +371,9 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
         {
             return ktl::err(surface_rc.error());
         }
-        win.surface_ = surface_rc.take_value();
+        auto shared_surface = surface_rc.take_value();
+
+        win.surface_ = shared_surface;
         win.sctx_    = _sctx;
         win.window_  = (__bridge_retained void *) window;
         win.view_    = (__bridge_retained void *) view;
@@ -388,7 +390,7 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
             [NSApp activateIgnoringOtherApps:YES];
         }
 
-        return std::make_tuple(std::move(win), win.surface_);
+        return std::make_tuple(std::move(win), shared_surface);
     }
 }
 

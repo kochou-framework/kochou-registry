@@ -39,16 +39,16 @@ struct entity_collection
         ktl::u32 old = ref.fetch_sub(1, std::memory_order::acq_rel);
         if (old == 1)
         {
-            destroy(this);
+            // destroy(this);
         }
     }
 
-    static ktl::result< entity_collection *, ktl::errc >
-    make(kochou::shared_context _sctx, const kochou::entity::surface & _surface,
-         const kochou::entity::swapchain::io_info _io_info) noexcept;
+    // static ktl::result< entity_collection *, ktl::errc >
+    // make(kochou::shared_context _sctx, const kochou::entity::surface & _surface,
+    //      const kochou::entity::swapchain::io_info _io_info) noexcept;
 
-    static void
-    destroy(entity_collection * _collection);
+    // static void
+    // destroy(entity_collection * _collection);
 };
 
 template < typename FRAME_DATA >
@@ -58,7 +58,7 @@ struct rcu_fence_frame
     entity_collection *   collection;
     FRAME_DATA            data;
 };
-
+/*
 class rcu_fence_frame1
 {
 public:
@@ -80,7 +80,7 @@ public:
     ~rcu_fence_frame() noexcept;
 
 private:
-};
+};*/
 } // namespace kochou::registry
 
 #endif
