@@ -9,6 +9,7 @@
 #include <ktl/type.hpp>
 
 #include <kochou/context/context.hpp>
+#include <kochou/entity/surface.hpp>
 
 namespace kochou::registry
 {
@@ -30,7 +31,7 @@ concept is_valid_window_interface = requires(WINDOW _window, const WINDOW & _con
                                              const window_input_params & _params) {
     {
         WINDOW::make(_sctx, _params)
-    } -> std::same_as< ktl::result< std::tuple< WINDOW, ktl::api::surface_khr >, ktl::errc > >;
+    } -> std::same_as< ktl::result< std::tuple< WINDOW, kochou::entity::shared_surface >, ktl::errc > >;
 
     // position
     { _const_window.offset_x() } noexcept -> std::same_as< ktl::i32 >;

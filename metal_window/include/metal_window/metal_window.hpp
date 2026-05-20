@@ -7,6 +7,7 @@
 #include <ktl/result.hpp>
 
 #include <kochou/context/context.hpp>
+#include <kochou/entity/surface.hpp>
 
 #include <common/window_interface.hpp>
 
@@ -37,7 +38,7 @@ private:
 
     // interface
 public:
-    static ktl::result< std::tuple< metal_window, ktl::api::surface_khr >, ktl::errc >
+    static ktl::result< std::tuple< metal_window, kochou::entity::shared_surface >, ktl::errc >
     make(kochou::shared_context _sctx, const kochou::registry::window_input_params & _params) noexcept;
 
     ktl::i32
@@ -69,10 +70,11 @@ public:
     poll_events() noexcept;
 
 private:
-    kochou::shared_context sctx_;
-    void *                 window_;
-    void *                 view_;
-    void *                 layer_;
+    kochou::shared_context         sctx_;
+    kochou::entity::shared_surface surface_;
+    void *                         window_;
+    void *                         view_;
+    void *                         layer_;
 };
 } // namespace kochou::registry
 

@@ -4,6 +4,7 @@
 #import <objc/runtime.h>
 
 #include <ktl/api.hpp>
+#include <ktl/memory.hpp>
 
 #include <kochou/kochou.hpp>
 
@@ -154,6 +155,7 @@ bool kochou::registry::metal_window::allowed(kochou::shared_context _sctx) noexc
 
 kochou::registry::metal_window::metal_window() noexcept
     : sctx_{}
+    , surface_{}
     , window_{nullptr}
     , view_{nullptr}
     , layer_{nullptr}
@@ -162,13 +164,14 @@ kochou::registry::metal_window::metal_window() noexcept
 
 kochou::registry::metal_window::metal_window(metal_window && _other) noexcept
     : sctx_{std::move(_other.sctx_)}
+    , surface_{std::move(_other.surface_)}
     , window_{_other.window_}
     , view_{_other.view_}
     , layer_{_other.layer_}
 {
     _other.window_ = nullptr;
-    _other.view_ = nullptr;
-    _other.layer_ = nullptr;
+    _other.view_   = nullptr;
+    _other.layer_  = nullptr;
 }
 
 kochou::registry::metal_window &
@@ -198,14 +201,15 @@ kochou::registry::metal_window::operator=(metal_window && _other) noexcept
         CFRelease(window_);
     }
 
-    sctx_ = std::move(_other.sctx_);
-    window_ = _other.window_;
-    view_ = _other.view_;
-    layer_ = _other.layer_;
+    sctx_    = std::move(_other.sctx_);
+    surface_ = std::move(_other.surface_);
+    window_  = _other.window_;
+    view_    = _other.view_;
+    layer_   = _other.layer_;
 
     _other.window_ = nullptr;
-    _other.view_ = nullptr;
-    _other.layer_ = nullptr;
+    _other.view_   = nullptr;
+    _other.layer_  = nullptr;
 
     return *this;
 }
@@ -239,7 +243,7 @@ kochou::registry::metal_window::~metal_window() noexcept
     }
 }
 
-ktl::result< std::tuple< kochou::registry::metal_window, ktl::api::surface_khr >, ktl::errc >
+ktl::result< std::tuple< kochou::registry::metal_window, kochou::entity::shared_surface >, ktl::errc >
 kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_input_params & _params) noexcept
 {
     @autoreleasepool
@@ -253,7 +257,6 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
         kochou_ensure_nsapp();
 
         metal_window win;
-        win.sctx_ = _sctx;
 
         ktl::api::instance instance = kochou::view::instance(_sctx);
 
@@ -348,25 +351,26 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
         kochou_set_delegate(window, delegate);
 
         ktl::api::metal_surface_create_info_ext surface_info{};
-        surface_info.p_layer = metal_layer;
-
+        surface_info.p_layer          = metal_layer;
         ktl::api::surface_khr surface = nullptr;
-        ktl::api::result vk_result = ktl::api::create_metal_surface_ext(
+        ktl::api::result rc           = ktl::api::create_metal_surface_ext(
             instance,
             &surface_info,
             nullptr,
             &surface
         );
-
-        if (vk_result != ktl::api::result::v_success) {
+        if (rc != ktl::api::result::v_success)
+        {
             [window close];
-            kochou::log::error("vkCreateMetalSurfaceEXT failed");
-            return ktl::err(ktl::errc::unknown);
+            kochou::log::error("create_metal_surface_ext failed");
+            return ktl::err(ktl::cast_api_result(rc));
         }
 
-        win.window_ = (__bridge_retained void *) window;
-        win.view_ = (__bridge_retained void *) view;
-        win.layer_ = (__bridge_retained void *) metal_layer;
+        win.sctx_    = _sctx;
+        win.surface_ = ktl::memory::make_shared< kochou::entity::surface >({surface, _params.width, _params.height});
+        win.window_  = (__bridge_retained void *) window;
+        win.view_    = (__bridge_retained void *) view;
+        win.layer_   = (__bridge_retained void *) metal_layer;
 
         if (_params.is_fullscreen)
         {
@@ -379,7 +383,7 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
             [NSApp activateIgnoringOtherApps:YES];
         }
 
-        return std::make_tuple(std::move(win), surface);
+        return std::make_tuple(std::move(win), win.surface_);
     }
 }
 

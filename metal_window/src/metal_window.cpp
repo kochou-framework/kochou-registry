@@ -30,7 +30,7 @@ kochou::registry::metal_window::metal_window() noexcept
     assert(false && "invalid usage");
 }
 
-ktl::result< std::tuple< kochou::registry::metal_window, ktl::api::surface_khr >, ktl::errc >
+ktl::result< std::tuple< kochou::registry::metal_window, kochou::entity::shared_surface >, ktl::errc >
 kochou::registry::metal_window::make(kochou::shared_context, const kochou::registry::window_input_params &) noexcept
 {
     assert(false && "invalid usage");
@@ -98,6 +98,12 @@ kochou::registry::metal_window::is_fullscreen() const noexcept
 
 bool
 kochou::registry::metal_window::should_close() const noexcept
+{
+    assert(false && "invalid usage");
+}
+
+void
+kochou::registry::metal_window::poll_events() noexcept
 {
     assert(false && "invalid usage");
 }
