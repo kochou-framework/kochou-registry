@@ -352,12 +352,12 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
 
         ktl::api::metal_surface_create_info_ext surface_info{};
         surface_info.p_layer          = metal_layer;
-        ktl::api::surface_khr surface = nullptr;
+        ktl::api::surface_khr surface_raw = nullptr;
         ktl::api::result rc           = ktl::api::create_metal_surface_ext(
             instance,
             &surface_info,
             nullptr,
-            &surface
+            &surface_raw
         );
         if (rc != ktl::api::result::v_success)
         {
@@ -366,8 +366,13 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
             return ktl::err(ktl::cast_api_result(rc));
         }
 
+        auto surface_rc = ktl::memory::make_shared< kochou::entity::surface >(surface_raw, _params.width, _params.height);
+        if (!surface_rc.has_value())
+        {
+            return ktl::err(surface_rc.error());
+        }
+        win.surface_ = surface_rc.take_value();
         win.sctx_    = _sctx;
-        win.surface_ = ktl::memory::make_shared< kochou::entity::surface >(surface, _params.width, _params.height);
         win.window_  = (__bridge_retained void *) window;
         win.view_    = (__bridge_retained void *) view;
         win.layer_   = (__bridge_retained void *) metal_layer;
