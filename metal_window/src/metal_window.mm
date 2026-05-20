@@ -367,7 +367,7 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
         }
 
         win.sctx_    = _sctx;
-        win.surface_ = ktl::memory::make_shared< kochou::entity::surface >({surface, _params.width, _params.height});
+        win.surface_ = ktl::memory::make_shared< kochou::entity::surface >(surface, _params.width, _params.height);
         win.window_  = (__bridge_retained void *) window;
         win.view_    = (__bridge_retained void *) view;
         win.layer_   = (__bridge_retained void *) metal_layer;
