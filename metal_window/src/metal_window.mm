@@ -366,7 +366,7 @@ kochou::registry::metal_window::make(kochou::shared_context _sctx, const window_
             return ktl::err(ktl::cast_api_result(rc));
         }
 
-        auto surface_rc = ktl::memory::make_shared< kochou::entity::surface >(surface_raw, _params.width, _params.height);
+        auto surface_rc = kochou::entity::surface::make_from(_sctx, surface_raw, _params.width, _params.height);
         if (!surface_rc.has_value())
         {
             return ktl::err(surface_rc.error());
