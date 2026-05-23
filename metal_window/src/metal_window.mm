@@ -125,6 +125,20 @@ kochou::registry::metal_window::ensure(kochou::shared_context _sctx) noexcept
         return rc;
     }
 
+    rc = kochou::ensure< kochou::extension< ktl::api::extension::khr_portability_subset > >(_sctx);
+    if (rc != ktl::errc::success)
+    {
+        kochou::log::error("ensure ktl::api::extension::khr_portability_subset failed");
+        return rc;
+    }
+
+    rc = kochou::ensure< kochou::extension< ktl::api::extension::khr_portability_enumeration > >(_sctx);
+    if (rc != ktl::errc::success)
+    {
+        kochou::log::error("ensure ktl::api::extension::khr_portability_enumeration failed");
+        return rc;
+    }
+
     return rc;
 }
 
@@ -144,13 +158,29 @@ ktl::errc kochou::registry::metal_window::should(kochou::shared_context _sctx) n
         return rc;
     }
 
+    rc = kochou::should< kochou::extension< ktl::api::extension::khr_portability_subset > >(_sctx);
+    if (rc != ktl::errc::success)
+    {
+        kochou::log::error("should ktl::api::extension::khr_portability_subset failed");
+        return rc;
+    }
+
+    rc = kochou::should< kochou::extension< ktl::api::extension::khr_portability_enumeration > >(_sctx);
+    if (rc != ktl::errc::success)
+    {
+        kochou::log::error("should ktl::api::extension::khr_portability_enumeration failed");
+        return rc;
+    }
+
     return rc;
 }
 
 bool kochou::registry::metal_window::allowed(kochou::shared_context _sctx) noexcept
 {
     return kochou::allowed< kochou::extension< ktl::api::extension::khr_surface > >(_sctx)
-        && kochou::allowed< kochou::extension< ktl::api::extension::ext_metal_surface > >(_sctx);
+        && kochou::allowed< kochou::extension< ktl::api::extension::ext_metal_surface > >(_sctx)
+        && kochou::allowed< kochou::extension< ktl::api::extension::khr_portability_subset > >(_sctx)
+        && kochou::allowed< kochou::extension< ktl::api::extension::khr_portability_enumeration > >(_sctx);
 }
 
 kochou::registry::metal_window::metal_window() noexcept
@@ -216,6 +246,7 @@ kochou::registry::metal_window::operator=(metal_window && _other) noexcept
 
 kochou::registry::metal_window::~metal_window() noexcept
 {
+    kochou::log::debug("~metal_window");
     @autoreleasepool
     {
         close();
