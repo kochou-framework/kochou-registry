@@ -1,12 +1,12 @@
 {
     "id": 0,
     "version": {
-        "major": 0,
+        "major": 1,
         "minor": 0,
         "patch": 0
     },
     "deps": [],
-    "author": "",
-    "mail": "",
-    "link": ""
+    "author": "urlagushka",
+    "mail": "nikolai.turkin.main@gmail.com",
+    "link": "https://github.com/urlagushka"
 }
