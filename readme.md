@@ -1,51 +1,29 @@
 # kochou-registry
+Is a public repositoty that contains approwed engine/renderer components.
 
-### deps:
-* kochou
-* ktl (includes in kochou)
+### Components
 
-### about:
-```txt
-kochou-registry is a public repo that contains officially approwed engine/renderer components
-```
+| ID | Name | Version | Description |
+|:---|:-----|:--------|:------------|
+| 0 | Example Dynamic Pipeline | 1.0.0 | Provides default (base implementation) configuration of dynamic Vulkan pipeline |
+| 1 | Example Dynamic Render | 1.0.0 | Provides default (base implementation) configuration of dynamic Vulkan render |
+| 2 | Metal Window | 1.0.0 | Provides window for MacOS (Quartz, Cocoa, Metal) following common window interface |
+| 3 | Xplat Window | in dev | Provides crossplatform window following common window interface |
 
-### common component tree:
+### Common component tree:
 ```txt
 components (dir)
--- kochou-component_XXX
-    -- about.md
+-- kochou_component_XXX
+    -- readme.md
     -- spec.json
-    -- layout.json
     -- src (dir, cpp)
     -- include (dir, hpp)
     -- modules (dir, cppm)
     -- xmake.lua
 ```
 
-spec.json
-```json
-{
-    "id": 0,
-    "version": {
-        "major": 0,
-        "minor": 0,
-        "patch": 0
-    },
-    "deps": [0, 1, 2],
-    "author": "",
-    "mail": "",
-    "link": ""
-}
-```
-
-layout.json
-```json
-{
-    ???
-}
-```
-
-```
-git submodule add https://gitverse.ru/kochou-framework/kochou.git third_party/kochou
-git submodule add https://gitverse.ru/kochou-framework/ktl.git third_party/ktl
-```
+### Public custom component
+You can develop and public your own component following next rules:
+* Support framework requirements system (see kochou/requirements)
+* Component tree must correspond the template
+After filling all auxiliary files (spec.json, readme.md, ...) you can make a pull request!
