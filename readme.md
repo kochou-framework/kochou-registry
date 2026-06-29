@@ -26,4 +26,5 @@ components (dir)
 You can develop and public your own component following next rules:
 * Support framework requirements system (see kochou/requirements)
 * Component tree must correspond the template
+
 After filling all auxiliary files (spec.json, readme.md, ...) you can make a pull request!
